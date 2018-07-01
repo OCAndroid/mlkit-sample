@@ -40,5 +40,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/run_on_cloud"
             android:text="Cloud"/>
+
+        <TextView
+            android:id="@+id/result_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

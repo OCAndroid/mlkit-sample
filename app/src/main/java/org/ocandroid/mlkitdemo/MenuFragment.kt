@@ -9,56 +9,57 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_learning_menu.*
 
-class MenuFragment: Fragment() {
+class MenuFragment : Fragment() {
 
-    private lateinit var fragmentHandler: FragmentHandler
+  private lateinit var fragmentHandler: FragmentHandler
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater!!.inflate(R.layout.fragment_learning_menu, container, false)
-    }
+  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    return inflater!!.inflate(R.layout.fragment_learning_menu, container, false)
+  }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        barcode_scanning.setOnClickListener(startBarcodeScanning())
-        face_detection.setOnClickListener(startFacialRecognition())
-        image_labeling.setOnClickListener(startImageLabeling())
-        landmark_detection.setOnClickListener(startLandmarkDetection())
-        text_recognition.setOnClickListener(startTextRecognition())
-    }
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    barcode_scanning.setOnClickListener(startBarcodeScanning())
+    face_detection.setOnClickListener(startFacialRecognition())
+    image_labeling.setOnClickListener(startImageLabeling())
+    landmark_detection.setOnClickListener(startLandmarkDetection())
+    text_recognition.setOnClickListener(startTextRecognition())
+  }
 
 
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        fragmentHandler = activity as FragmentHandler
-    }
+  override fun onAttach(activity: Activity?) {
+    super.onAttach(activity)
+    fragmentHandler = activity as FragmentHandler
+  }
 
-    fun startFacialRecognition() = View.OnClickListener {
-        Log.d("OnClickListener", "Facial Recognition!")
-        fragmentHandler.setCurrentFragment(FaceDetectionFragment(), FaceDetectionFragment.TAG)
-    }
+  fun startFacialRecognition() = View.OnClickListener {
+    Log.d("OnClickListener", "Facial Recognition!")
+    fragmentHandler.setCurrentFragment(FaceDetectionFragment(), FaceDetectionFragment.TAG)
+  }
 
-    fun startLandmarkDetection() = View.OnClickListener {
-        Log.d("OnClickListener", "Landmark Detection!")
-    }
+  fun startLandmarkDetection() = View.OnClickListener {
+    Log.d("OnClickListener", "Landmark Detection!")
+  }
 
-    fun startTextRecognition() = View.OnClickListener {
-        Log.d("OnClickListener", "Text Recognition!")
-    }
+  fun startTextRecognition() = View.OnClickListener {
+    Log.d("OnClickListener", "Text Recognition!")
+  }
 
-    fun startBarcodeScanning() = View.OnClickListener {
-        Log.d("OnClickListener", "Barcode Scanning!")
-    }
+  fun startBarcodeScanning() = View.OnClickListener {
+    Log.d("OnClickListener", "Barcode Scanning!")
+  }
 
-    fun startImageLabeling() = View.OnClickListener {
-        Log.d("OnClickListener", "Image Labeling!")
-    }
+  fun startImageLabeling() = View.OnClickListener {
+    Log.d("OnClickListener", "Image Labeling!")
+    fragmentHandler.setCurrentFragment(ImageLabelingFragment(), ImageLabelingFragment.TAG)
+  }
 
-    interface FragmentHandler {
-        fun setCurrentFragment(fragment: Fragment, tag: String)
-    }
+  interface FragmentHandler {
+    fun setCurrentFragment(fragment: Fragment, tag: String)
+  }
 
-    companion object {
-        val TAG = "MenuFragment"
-    }
+  companion object {
+    val TAG = "MenuFragment"
+  }
 }
 
