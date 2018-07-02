@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/error"
-        android:textColor="@android:color/white"
-        android:background="@android:color/holo_red_light"
-        android:padding="12.5dp"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Sorry. Unable to process request at this time"/>
+        android:background="@android:color/holo_red_light"
+        android:gravity="center"
+        android:padding="12.5dp"
+        android:text="Sorry. Unable to process request at this time"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/image_view_container"
-        android:background="@android:color/black"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/run_on_device"
-            android:text="Device"/>
-        <Button
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/run_on_cloud"
-            android:text="Cloud"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/result_text"
+        <Button
+            android:id="@+id/run_on_device"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Device" />
+
+        <Button
+            android:id="@+id/run_on_cloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cloud" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

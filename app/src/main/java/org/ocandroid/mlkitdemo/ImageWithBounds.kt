@@ -68,7 +68,8 @@ class ImageWithBounds @JvmOverloads constructor(
   }
 
   companion object {
-    const val SCALE_FACTOR: Float = 0.92f
+//    const val SCALE_FACTOR: Float = 0.92f
+    const val SCALE_FACTOR: Float = 0.40924594f
   }
 
 }

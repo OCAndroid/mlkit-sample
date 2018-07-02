@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_learning_menu.*
+import org.w3c.dom.Text
 
 class MenuFragment : Fragment() {
 
@@ -39,14 +40,17 @@ class MenuFragment : Fragment() {
 
   fun startLandmarkDetection() = View.OnClickListener {
     Log.d("OnClickListener", "Landmark Detection!")
+    fragmentHandler.setCurrentFragment(LandmarkDetectionFragment(), LandmarkDetectionFragment.TAG)
   }
 
   fun startTextRecognition() = View.OnClickListener {
     Log.d("OnClickListener", "Text Recognition!")
+    fragmentHandler.setCurrentFragment(TextDetectionFragment(), TextDetectionFragment.TAG)
   }
 
   fun startBarcodeScanning() = View.OnClickListener {
     Log.d("OnClickListener", "Barcode Scanning!")
+    fragmentHandler.setCurrentFragment(BarcodeDetectionFragment(), BarcodeDetectionFragment.TAG)
   }
 
   fun startImageLabeling() = View.OnClickListener {
