@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
+import com.google.firebase.ml.vision.cloud.text.FirebaseVisionCloudText
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint
 import kotlinx.android.synthetic.main.fragment_detector.*
@@ -59,15 +60,7 @@ class TextDetectionFragment: Fragment() {
       .getVisionCloudDocumentTextDetector()
       .detectInImage(getVisionImage())
       .addOnSuccessListener { textResult ->
-        renderBitmap(
-          textResult.pages.flatMap{
-            it.blocks.flatMap {
-              it.paragraphs.flatMap {
-                it.words.flatMap {
-                  it.symbols.mapNotNull {
-                    it.boundingBox } } } } } // Box Symbols
-          , arrayListOf())
-
+        renderBitmap(getSymbolBoundingBoxes(textResult), arrayListOf())
         for (page in textResult.pages) {
           for (text in page.blocks) {
             for (paragraph in text.paragraphs) {
@@ -81,6 +74,16 @@ class TextDetectionFragment: Fragment() {
       }
       .addOnFailureListener(onFailure())
   }
+
+
+  private fun getSymbolBoundingBoxes(textResult: FirebaseVisionCloudText) =
+    textResult.pages.flatMap{
+      it.blocks.flatMap {
+      it.paragraphs.flatMap {
+      it.words.flatMap {
+      it.symbols.mapNotNull {
+      it.boundingBox } } } }
+    }
 
   private fun onFailure() = OnFailureListener {
     Log.e(TAG, "Failed to detect landmark", it)
