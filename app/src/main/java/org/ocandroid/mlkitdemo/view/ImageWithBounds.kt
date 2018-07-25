@@ -1,4 +1,4 @@
-package org.ocandroid.mlkitdemo
+package org.ocandroid.mlkitdemo.view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -41,14 +41,16 @@ class ImageWithBounds @JvmOverloads constructor(
   }
 
   private fun drawDot(canvas: Canvas, point: FirebaseVisionPoint) {
-    canvas.drawPoint(point.x.scaleToFactor(), point.y.scaleToFactor(), dotPaint)
+    val amount = canvas.factor()
+    canvas.drawPoint(point.x.scale(amount), point.y.scale(amount), dotPaint)
   }
 
   private fun drawRect(canvas: Canvas, rect: Rect) {
-    drawBottomBorder(canvas, rect.scaleToFactor(), linePaint)
-    drawTopBorder(canvas, rect.scaleToFactor(), linePaint)
-    drawLeftBorder(canvas, rect.scaleToFactor(), linePaint)
-    drawRightBorder(canvas, rect.scaleToFactor(), linePaint)
+    val amount = canvas.factor()
+    drawBottomBorder(canvas, rect.scale(amount), linePaint)
+    drawTopBorder(canvas, rect.scale(amount), linePaint)
+    drawLeftBorder(canvas, rect.scale(amount), linePaint)
+    drawRightBorder(canvas, rect.scale(amount), linePaint)
   }
 
   private fun drawTopBorder(canvas: Canvas, rect: Rect, paint: Paint) {
@@ -67,20 +69,17 @@ class ImageWithBounds @JvmOverloads constructor(
     canvas.drawLine(rect.left.toFloat(), rect.bottom.toFloat(), rect.right.toFloat(), rect.bottom.toFloat(), paint)
   }
 
-  companion object {
-//    const val SCALE_FACTOR: Float = 0.92f
-    const val SCALE_FACTOR: Float = 0.40924594f
-  }
+  fun Canvas.factor() = 1.0f * this.width / drawable.bounds.right
 
+  // Helper method used to scale the bounding box to the right dimensions when drawn.
+  fun Rect.scale(factor: Float) = Rect(
+    (this.left * factor).toInt(),
+    (this.top * factor).toInt(),
+    (this.right * factor).toInt(),
+    (this.bottom * factor).toInt()
+  )
+
+  // Helper method used to scale the dot to the correct dimensions when drawn.
+  fun Float.scale(factor: Float) = factor * this
 }
 
-// Helper method used to scale the bounding box to the right dimensions when drawn.
-fun Rect.scaleToFactor() = Rect(
-  (this.left * ImageWithBounds.SCALE_FACTOR).toInt(),
-  (this.top * ImageWithBounds.SCALE_FACTOR).toInt(),
-  (this.right * ImageWithBounds.SCALE_FACTOR).toInt(),
-  (this.bottom * ImageWithBounds.SCALE_FACTOR).toInt()
-)
-
-// Helper method used to scale the dot to the correct dimensions when drawn.
-fun Float.scaleToFactor() = ImageWithBounds.SCALE_FACTOR * this
