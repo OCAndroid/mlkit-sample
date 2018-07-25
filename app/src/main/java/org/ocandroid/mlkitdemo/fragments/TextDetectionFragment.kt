@@ -32,11 +32,12 @@ class TextDetectionFragment: Fragment() {
   }
 
   private fun setUpClickListeners() {
-    run_on_device.setOnClickListener { runCloudLandMarkDetection() }
-    run_on_cloud.setOnClickListener { runCloudLandMarkDetection() }
+    run_on_device.setOnClickListener { runDeviceTextDetection() }
+    run_on_cloud.setOnClickListener { runCloudTextDetection() }
   }
 
-  private fun runCloudLandMarkDetection() {
+
+  private fun runDeviceTextDetection() {
     FirebaseVision.getInstance()
       .getVisionTextDetector()
       .detectInImage(getVisionImage())
@@ -47,6 +48,34 @@ class TextDetectionFragment: Fragment() {
           for (line in text.lines) {
             Log.i(TAG, "BoundingBox: " + line.boundingBox)
             Log.i(TAG, "Elements: " + line.elements.map { it.text }.joinToString("+"))
+          }
+        }
+      }
+      .addOnFailureListener(onFailure())
+  }
+
+  private fun runCloudTextDetection() {
+    FirebaseVision.getInstance()
+      .getVisionCloudDocumentTextDetector()
+      .detectInImage(getVisionImage())
+      .addOnSuccessListener { textResult ->
+        renderBitmap(
+          textResult.pages.flatMap{
+            it.blocks.flatMap {
+              it.paragraphs.flatMap {
+                it.words.flatMap {
+                  it.symbols.mapNotNull {
+                    it.boundingBox } } } } } // Box Symbols
+          , arrayListOf())
+
+        for (page in textResult.pages) {
+          for (text in page.blocks) {
+            for (paragraph in text.paragraphs) {
+              for (word in paragraph.words) {
+                Log.i(TAG, "BoundingBox: " + word.boundingBox)
+              }
+              Log.i(TAG, "Elements: " + paragraph.words.mapNotNull { it.symbols.mapNotNull { it.text }.joinToString("") }.joinToString("+"))
+            }
           }
         }
       }
