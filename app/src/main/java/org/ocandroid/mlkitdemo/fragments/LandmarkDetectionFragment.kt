@@ -42,16 +42,19 @@ class LandmarkDetectionFragment : Fragment() {
       .getVisionCloudLandmarkDetector(getOptions())
       .detectInImage(getVisionImage())
       .addOnSuccessListener { landmarks ->
+        val text = StringBuilder()
         for (landmark in landmarks) {
-          Log.i(TAG, "Landmark: " + landmark.landmark)
-          Log.i(TAG, "Confidence: " + landmark.confidence)
-          Log.i(TAG, "Entity Id: " + landmark.entityId)
+          text.append("Landmark: " + landmark.landmark + "\n")
+          text.append("Confidence: " + landmark.confidence + "\n")
+          text.append("Entity Id: " + landmark.entityId + "\n")
           for (loc in landmark.locations) {
-            Log.i(TAG, "Latitude: " + loc.latitude)
-            Log.i(TAG, "Longitude: " + loc.longitude)
+            text.append("Latitude: " + loc.latitude + "\n")
+            text.append("Longitude: " + loc.longitude + "\n")
           }
+          text.append("\n")
         }
         renderBitmap(landmarks.mapNotNull { it.boundingBox }, listOf())
+        result_text.text = text.toString()
       }
       .addOnFailureListener(onFailure())
   }

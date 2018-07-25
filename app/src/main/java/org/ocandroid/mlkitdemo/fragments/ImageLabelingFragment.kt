@@ -72,23 +72,27 @@ class ImageLabelingFragment : Fragment() {
   }
 
   private fun onFailure() = OnFailureListener {
-    Log.e("Image Labeling", "Failed", it)
+    result_text.text = "Image Labeling Failed"
   }
 
   private fun onCloudSuccess(list: List<FirebaseVisionCloudLabel>) {
+    val text = StringBuilder()
     for (label in list) {
-      Log.d("Labeling Result Text", label.label)
-      Log.d("Labeling Result ID", label.entityId)
-      Log.d("Labeling Result Score", label.confidence.toString())
+      text.append("Labeling Result Text: ", label.label + "\n")
+      text.append("Labeling Result ID: ", label.entityId + "\n")
+      text.append("Labeling Result Score: ", label.confidence.toString() + "\n\n")
     }
+    result_text.text = text.toString()
   }
 
   private fun onDeviceSuccess(list: List<FirebaseVisionLabel>) {
+    val text = StringBuilder()
     for (label in list) {
-      Log.d("Labeling Result Text", label.label)
-      Log.d("Labeling Result ID", label.entityId)
-      Log.d("Labeling Result Score", label.confidence.toString())
+      text.append("Labeling Result Text: ", label.label + "\n")
+      text.append("Labeling Result ID: ", label.entityId + "\n")
+      text.append("Labeling Result Score: ", label.confidence.toString() + "\n\n")
     }
+    result_text.text = text.toString()
   }
 
   private fun getOptions() = FirebaseVisionLabelDetectorOptions.Builder()

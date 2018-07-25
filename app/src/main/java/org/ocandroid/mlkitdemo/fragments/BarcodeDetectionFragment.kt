@@ -43,14 +43,22 @@ class BarcodeDetectionFragment: Fragment() {
       .detectInImage(getVisionImage())
       .addOnSuccessListener { barcodes ->
         renderBitmap(barcodes.mapNotNull { it.boundingBox }, arrayListOf())
+        val text = StringBuilder()
         for (barcode in barcodes) {
-          Log.i(TAG, "${barcode.boundingBox}")
-          Log.i(TAG, "${barcode.cornerPoints}")
-          Log.i(TAG, "${barcode.rawValue}")
-          Log.i(TAG, "${barcode.valueType}")
+          text
+            .append("boundingBox: ${barcode.boundingBox}").append("\n")
+            .append("cornerPoints: ${barcode.cornerPoints}").append("\n")
+            .append("rawValue: ${barcode.rawValue}").append("\n")
+            .append("valueType: ${barcode.valueType}").append("\n")
+
         }
+        renderResultText(text.toString())
       }
       .addOnFailureListener(onFailure())
+  }
+
+  private fun renderResultText(text: String) {
+    result_text.text = text
   }
 
   private fun onFailure() = OnFailureListener {

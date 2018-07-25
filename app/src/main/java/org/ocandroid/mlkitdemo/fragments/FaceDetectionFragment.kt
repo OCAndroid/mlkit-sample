@@ -57,6 +57,7 @@ class FaceDetectionFragment : Fragment() {
 
   private fun onSuccess() = OnSuccessListener<List<FirebaseVisionFace>> { faces ->
     Log.d("Done", "Got Back ${faces.size} results")
+    result_text.text = ""
     renderBitmap(faces.map { it.boundingBox }, faces.flatMap { findAllLandmarks(it) })
     faces.forEach { logAdditionalInformation(it) }
   }
@@ -112,33 +113,39 @@ class FaceDetectionFragment : Fragment() {
   }
 
   private fun logAdditionalInformation(face: FirebaseVisionFace) {
-    Log.d(TAG, "boundingBox:" + face.boundingBox.toString())
-    Log.d(TAG, "headEulerAngleY:" + face.headEulerAngleY.toString()) // Head is rotated to the right rotY degrees
-    Log.d(TAG, "headEulerAngleZ:" + face.headEulerAngleZ.toString()) // Head is tilted sideways rotZ degrees
+    val text = StringBuilder()
+    text.append("boundingBox:" + face.boundingBox.toString() + "\n")
+    text.append("headEulerAngleY:" + face.headEulerAngleY.toString() + "\n") // Head is rotated to the right rotY degrees
+    text.append("headEulerAngleZ:" + face.headEulerAngleZ.toString() + "\n") // Head is tilted sideways rotZ degrees
 
     // If landmark detection was enabled (mouth, ears, eyes, cheeks, and
     // nose available):
     val leftEar = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EAR)
     if (leftEar != null) {
-      val leftEarPos = leftEar.position
-      Log.d(TAG, "leftEar:" + leftEar.position.toString())
+      text.append( "leftEar:" + leftEar.position.toString() + "\n")
     }
 
     // If classification was enabled:
     if (face.smilingProbability !== FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
       val smileProb = face.smilingProbability
-      Log.d(TAG, "smileProb:" + smileProb.toString())
+      text.append("smileProb:" + smileProb.toString() + "\n")
     }
     if (face.rightEyeOpenProbability !== FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
       val rightEyeOpenProb = face.rightEyeOpenProbability
-      Log.d(TAG, "rightEyeOpenProb:" + rightEyeOpenProb.toString())
+      text.append("rightEyeOpenProb:" + rightEyeOpenProb.toString() + "\n")
     }
 
     // If face tracking was enabled:
     if (face.trackingId !== FirebaseVisionFace.INVALID_ID) {
       val id = face.trackingId
-      Log.d(TAG, "id:" + id.toString())
+      text.append("id:" + id.toString() + "\n")
     }
+
+    renderResultText(text.toString())
+  }
+
+  private fun renderResultText(text: String) {
+    result_text.text = result_text.text.toString() + "\n" + text
   }
 
 

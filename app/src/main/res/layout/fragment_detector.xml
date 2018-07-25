@@ -42,8 +42,14 @@
             android:text="Cloud" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/result_text"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/result_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+    </ScrollView>
 </LinearLayout>

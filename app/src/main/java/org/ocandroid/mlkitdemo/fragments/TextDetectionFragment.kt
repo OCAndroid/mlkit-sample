@@ -44,13 +44,14 @@ class TextDetectionFragment: Fragment() {
       .detectInImage(getVisionImage())
       .addOnSuccessListener { textResult ->
         renderBitmap(textResult.blocks.flatMap { it.lines.map { it.boundingBox } .filterNotNull() }, arrayListOf())
-
-        for (text in textResult.blocks) {
-          for (line in text.lines) {
-            Log.i(TAG, "BoundingBox: " + line.boundingBox)
-            Log.i(TAG, "Elements: " + line.elements.map { it.text }.joinToString("+"))
+        val text = StringBuilder()
+        for (block in textResult.blocks) {
+          for (line in block.lines) {
+            text.append("BoundingBox: " + line.boundingBox + "\n")
+            text.append("Elements: " + line.elements.map { it.text }.joinToString("+") + "\n")
           }
         }
+        result_text.text = text.toString()
       }
       .addOnFailureListener(onFailure())
   }
@@ -61,16 +62,18 @@ class TextDetectionFragment: Fragment() {
       .detectInImage(getVisionImage())
       .addOnSuccessListener { textResult ->
         renderBitmap(getSymbolBoundingBoxes(textResult), arrayListOf())
+        val text = StringBuilder()
         for (page in textResult.pages) {
-          for (text in page.blocks) {
-            for (paragraph in text.paragraphs) {
+          for (block in page.blocks) {
+            for (paragraph in block.paragraphs) {
               for (word in paragraph.words) {
-                Log.i(TAG, "BoundingBox: " + word.boundingBox)
+                text.append("BoundingBox: " + word.boundingBox + "\n")
               }
-              Log.i(TAG, "Elements: " + paragraph.words.mapNotNull { it.symbols.mapNotNull { it.text }.joinToString("") }.joinToString("+"))
+              text.append("Elements: " + paragraph.words.mapNotNull { it.symbols.mapNotNull { it.text }.joinToString("") }.joinToString("+") + "\n")
             }
           }
         }
+        result_text.text = text.toString()
       }
       .addOnFailureListener(onFailure())
   }
