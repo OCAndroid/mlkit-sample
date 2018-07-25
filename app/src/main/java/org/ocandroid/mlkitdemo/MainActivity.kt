@@ -2,21 +2,9 @@ package org.ocandroid.mlkitdemo
 
 import android.app.Fragment
 import android.app.FragmentTransaction
-import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
-import android.support.annotation.NonNull
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.ml.vision.text.FirebaseVisionText
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.text.FirebaseVisionTextDetector
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import android.text.method.TextKeyListener.clear
-import android.widget.Toast
+import org.ocandroid.mlkitdemo.fragments.MenuFragment
 
 
 class MainActivity : AppCompatActivity(), MenuFragment.FragmentHandler {

@@ -1,4 +1,4 @@
-package org.ocandroid.mlkitdemo;
+package org.ocandroid.mlkitdemo.fragments;
 
 import android.app.Activity
 import android.app.Fragment
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_learning_menu.*
-import org.w3c.dom.Text
+import org.ocandroid.mlkitdemo.R
 
 class MenuFragment : Fragment() {
 

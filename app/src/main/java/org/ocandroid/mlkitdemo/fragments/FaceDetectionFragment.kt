@@ -1,4 +1,4 @@
-package org.ocandroid.mlkitdemo
+package org.ocandroid.mlkitdemo.fragments
 
 import android.app.Fragment
 import android.graphics.BitmapFactory
@@ -17,6 +17,8 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import kotlinx.android.synthetic.main.fragment_detector.*
+import org.ocandroid.mlkitdemo.R
+import org.ocandroid.mlkitdemo.view.ImageWithBounds
 
 
 class FaceDetectionFragment : Fragment() {

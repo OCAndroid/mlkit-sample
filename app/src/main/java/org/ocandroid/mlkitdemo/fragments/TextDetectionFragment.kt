@@ -1,4 +1,4 @@
-package org.ocandroid.mlkitdemo
+package org.ocandroid.mlkitdemo.fragments
 
 import android.app.Fragment
 import android.graphics.BitmapFactory
@@ -14,9 +14,10 @@ import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint
 import kotlinx.android.synthetic.main.fragment_detector.*
+import org.ocandroid.mlkitdemo.R
+import org.ocandroid.mlkitdemo.view.ImageWithBounds
 
-
-class LandmarkDetectionFragment : Fragment() {
+class TextDetectionFragment: Fragment() {
 
   lateinit var imageView: ImageWithBounds
 
@@ -37,16 +38,15 @@ class LandmarkDetectionFragment : Fragment() {
 
   private fun runCloudLandMarkDetection() {
     FirebaseVision.getInstance()
-      .getVisionCloudLandmarkDetector(getOptions())
+      .getVisionTextDetector()
       .detectInImage(getVisionImage())
-      .addOnSuccessListener { landmarks ->
-        for (landmark in landmarks) {
-          Log.i(TAG, "Landmark: " + landmark.landmark)
-          Log.i(TAG, "Confidence: " + landmark.confidence)
-          Log.i(TAG, "Entity Id: " + landmark.entityId)
-          for (loc in landmark.locations) {
-            Log.i(TAG, "Latitude: " + loc.latitude)
-            Log.i(TAG, "Longitude: " + loc.longitude)
+      .addOnSuccessListener { textResult ->
+        renderBitmap(textResult.blocks.flatMap { it.lines.map { it.boundingBox } .filterNotNull() }, arrayListOf())
+
+        for (text in textResult.blocks) {
+          for (line in text.lines) {
+            Log.i(TAG, "BoundingBox: " + line.boundingBox)
+            Log.i(TAG, "Elements: " + line.elements.map { it.text }.joinToString("+"))
           }
         }
       }
@@ -68,8 +68,13 @@ class LandmarkDetectionFragment : Fragment() {
     imageView.landmarks = landmarks
     imageView.setImageBitmap(bitmap)
 
+    Log.i(TAG, "Width: ${bitmap.width} & ${bitmap.height}")
     image_view_container.addView(imageView)
+    Log.i(TAG, "Width: ${image_view_container.width} & ${image_view_container.height}")
+    Log.i(TAG, "Width: ${image_view_container.width.toFloat() / bitmap.width.toFloat()}")
   }
+
+
 
   private fun getOptions() = FirebaseVisionCloudDetectorOptions.Builder()
     .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
@@ -84,7 +89,7 @@ class LandmarkDetectionFragment : Fragment() {
     )
 
   companion object {
-    val EXAMPLE_FILE_NAME = "landmark.jpg"
-    val TAG = "LandmarkDetectionFragment"
+    val EXAMPLE_FILE_NAME = "text_image.png"
+    val TAG = "TextDetectionFragment"
   }
 }

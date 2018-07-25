@@ -1,4 +1,4 @@
-package org.ocandroid.mlkitdemo
+package org.ocandroid.mlkitdemo.fragments
 
 import android.app.Fragment
 import android.graphics.BitmapFactory
@@ -14,8 +14,8 @@ import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint
 import kotlinx.android.synthetic.main.fragment_detector.*
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
-
+import org.ocandroid.mlkitdemo.R
+import org.ocandroid.mlkitdemo.view.ImageWithBounds
 
 
 class BarcodeDetectionFragment: Fragment() {
