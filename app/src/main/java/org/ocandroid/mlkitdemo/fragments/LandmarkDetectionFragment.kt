@@ -51,6 +51,7 @@ class LandmarkDetectionFragment : Fragment() {
             Log.i(TAG, "Longitude: " + loc.longitude)
           }
         }
+        renderBitmap(landmarks.mapNotNull { it.boundingBox }, listOf())
       }
       .addOnFailureListener(onFailure())
   }
