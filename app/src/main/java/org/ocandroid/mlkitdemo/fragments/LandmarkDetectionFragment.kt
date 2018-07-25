@@ -29,11 +29,11 @@ class LandmarkDetectionFragment : Fragment() {
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     renderBitmap(ArrayList(), ArrayList())
+    run_on_device.visibility = View.GONE
     setUpClickListeners()
   }
 
   private fun setUpClickListeners() {
-    run_on_device.setOnClickListener { runCloudLandMarkDetection() }
     run_on_cloud.setOnClickListener { runCloudLandMarkDetection() }
   }
 

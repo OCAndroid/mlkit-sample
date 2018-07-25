@@ -33,11 +33,11 @@ class BarcodeDetectionFragment: Fragment() {
   }
 
   private fun setUpClickListeners() {
-    run_on_device.setOnClickListener { runCloudLandMarkDetection() }
-    run_on_cloud.setOnClickListener { runCloudLandMarkDetection() }
+    run_on_device.setOnClickListener { runDeviceBarcodeScanner() }
+    run_on_cloud.visibility = View.GONE
   }
 
-  private fun runCloudLandMarkDetection() {
+  private fun runDeviceBarcodeScanner() {
     FirebaseVision.getInstance()
       .getVisionBarcodeDetector()
       .detectInImage(getVisionImage())
